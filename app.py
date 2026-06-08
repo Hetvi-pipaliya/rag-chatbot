@@ -1,7 +1,4 @@
-ide"
-)
-
-st.markdown(""import streamlit as st
+import streamlit as st
 from pdf_processor import extract_text_from_pdf, split_text_into_chunks
 from vector_store import add_chunks_to_vectorstore, search_relevant_chunks
 from langchain_groq import ChatGroq
@@ -14,12 +11,12 @@ load_dotenv()
 st.set_page_config(
     page_title="RAG Chatbot",
     page_icon="🤖",
-    layout="w"
+    layout="wide"
+)
+
+st.markdown("""
 <style>
-    .stApp {
-        background-color: #0f1117;
-        color: white;
-    }
+    .stApp { background-color: #0f1117; color: white; }
     .main-header {
         text-align: center;
         padding: 20px;
@@ -27,48 +24,15 @@ st.set_page_config(
         border-radius: 15px;
         margin-bottom: 30px;
     }
-    .chat-message-user {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        padding: 15px;
-        border-radius: 15px;
-        margin: 10px 0;
-        color: white;
-    }
-    .chat-message-bot {
-        background: #1e2130;
-        padding: 15px;
-        border-radius: 15px;
-        margin: 10px 0;
-        border-left: 4px solid #667eea;
-        color: white;
-    }
-    .source-badge {
-        background: #667eea;
-        padding: 3px 10px;
-        border-radius: 20px;
-        font-size: 12px;
-        color: white;
-    }
     .stButton>button {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         border: none;
         border-radius: 10px;
-        padding: 10px 20px;
         width: 100%;
     }
-    .upload-section {
-        background: #1e2130;
-        padding: 20px;
-        border-radius: 15px;
-        border: 1px solid #667eea;
-    }
-   [data-testid="stSidebar"] {
-    background-color: #1e2130;
-}
-[data-testid="stSidebar"] * {
-    color: white !important;
-}
+    [data-testid="stSidebar"] { background-color: #1e2130; }
+    [data-testid="stSidebar"] * { color: white !important; }
 </style>
 """, unsafe_allow_html=True)
 
