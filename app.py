@@ -14,11 +14,11 @@ st.set_page_config(
     layout="wide"
 )
 
-# सुधरा हुआ डार्क थीम CSS ताकि चैट का टेक्स्ट साफ़ दिखे
+# पूरी तरह से फिक्स किया हुआ डार्क थीम CSS
 st.markdown("""
 <style>
     /* पूरे ऐप का बैकग्राउंड */
-    .stApp { background-color: #0f1117; color: #ffffff !important; }
+    .stApp { background-color: #0f1117; }
     
     /* हेडर और बटन स्टाइल्स */
     .main-header {
@@ -37,23 +37,34 @@ st.markdown("""
     }
     [data-testid="stSidebar"] { background-color: #1e2130; }
     
-    /* चैट बॉक्स और उसके अंदर के सभी टेक्स्ट को जबरदस्ती वाइट करने के लिए */
+    /* चैट बॉक्स और उसके अंदर का टेक्स्ट */
     [data-testid="stChatMessage"] {
         background-color: #1e2130 !important;
-        color: #ffffff !important;
         border-radius: 10px;
         margin-bottom: 10px;
     }
-    [data-testid="stChatMessage"] * {
+    [data-testid="stChatMessage"] p, 
+    [data-testid="stChatMessage"] li, 
+    [data-testid="stChatMessage"] span, 
+    [data-testid="stChatMessage"] div {
         color: #ffffff !important;
     }
     
-    /* सामान्य टेक्स्ट एलिमेंट्स */
-    p, li, h1, h2, h3, label, span, div { color: #ffffff !important; }
+    /* साइडबार और सामान्य हेडिंग्स का टेक्स्ट */
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] li, 
+    [data-testid="stSidebar"] h1, 
+    [data-testid="stSidebar"] h2, 
+    [data-testid="stSidebar"] h3, 
+    [data-testid="stSidebar"] label { 
+        color: #ffffff !important; 
+    }
+    .main-header h1, .main-header p { color: #ffffff !important; }
     
-    /* इनपुट बॉक्स का टेक्स्ट कलर फिक्स करने के लिए */
-    .stChatInput textarea {
-        color: #ffffff !important;
+    /* नीचे वाले इनपुट बॉक्स (Type Bar) का टेक्स्ट कलर वापस ब्लैक/डार्क करने के लिए */
+    [data-testid="stChatInput"] textarea {
+        color: #1e2130 !important;
+        background-color: #ffffff !important;
     }
 </style>
 """, unsafe_allow_html=True)
