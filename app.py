@@ -1,4 +1,7 @@
-import streamlit as st
+ide"
+)
+
+st.markdown(""import streamlit as st
 from pdf_processor import extract_text_from_pdf, split_text_into_chunks
 from vector_store import add_chunks_to_vectorstore, search_relevant_chunks
 from langchain_groq import ChatGroq
@@ -11,10 +14,7 @@ load_dotenv()
 st.set_page_config(
     page_title="RAG Chatbot",
     page_icon="🤖",
-    layout="wide"
-)
-
-st.markdown("""
+    layout="w"
 <style>
     .stApp {
         background-color: #0f1117;
@@ -63,9 +63,12 @@ st.markdown("""
         border-radius: 15px;
         border: 1px solid #667eea;
     }
-    [data-testid="stSidebar"] {
-        background-color: #1e2130;
-    }
+   [data-testid="stSidebar"] {
+    background-color: #1e2130;
+}
+[data-testid="stSidebar"] * {
+    color: white !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
