@@ -33,6 +33,9 @@ st.markdown("""
     }
     [data-testid="stSidebar"] { background-color: #1e2130; }
     [data-testid="stSidebar"] * { color: white !important; }
+    p, li, h1, h2, h3, label { color: white !important; }
+    [data-testid="stChatMessage"] p { color: white !important; }
+    [data-testid="stChatMessage"] li { color: white !important; }
 </style>
 """, unsafe_allow_html=True)
 
