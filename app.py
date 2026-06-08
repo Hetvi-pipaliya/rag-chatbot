@@ -14,9 +14,13 @@ st.set_page_config(
     layout="wide"
 )
 
+# सुधरा हुआ डार्क थीम CSS ताकि चैट का टेक्स्ट साफ़ दिखे
 st.markdown("""
 <style>
-    .stApp { background-color: #0f1117; color: white; }
+    /* पूरे ऐप का बैकग्राउंड */
+    .stApp { background-color: #0f1117; color: #ffffff !important; }
+    
+    /* हेडर और बटन स्टाइल्स */
     .main-header {
         text-align: center;
         padding: 20px;
@@ -32,10 +36,25 @@ st.markdown("""
         width: 100%;
     }
     [data-testid="stSidebar"] { background-color: #1e2130; }
-    [data-testid="stSidebar"] * { color: white !important; }
-    p, li, h1, h2, h3, label { color: white !important; }
-    [data-testid="stChatMessage"] p { color: white !important; }
-    [data-testid="stChatMessage"] li { color: white !important; }
+    
+    /* चैट बॉक्स और उसके अंदर के सभी टेक्स्ट को जबरदस्ती वाइट करने के लिए */
+    [data-testid="stChatMessage"] {
+        background-color: #1e2130 !important;
+        color: #ffffff !important;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+    [data-testid="stChatMessage"] * {
+        color: #ffffff !important;
+    }
+    
+    /* सामान्य टेक्स्ट एलिमेंट्स */
+    p, li, h1, h2, h3, label, span, div { color: #ffffff !important; }
+    
+    /* इनपुट बॉक्स का टेक्स्ट कलर फिक्स करने के लिए */
+    .stChatInput textarea {
+        color: #ffffff !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
