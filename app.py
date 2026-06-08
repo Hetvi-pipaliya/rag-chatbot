@@ -8,8 +8,73 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-st.set_page_config(page_title="RAG Chatbot", page_icon="🤖")
-st.title("🤖 RAG Chatbot")
+st.set_page_config(
+    page_title="RAG Chatbot",
+    page_icon="🤖",
+    layout="wide"
+)
+
+st.markdown("""
+<style>
+    .stApp {
+        background-color: #0f1117;
+        color: white;
+    }
+    .main-header {
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 15px;
+        margin-bottom: 30px;
+    }
+    .chat-message-user {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        padding: 15px;
+        border-radius: 15px;
+        margin: 10px 0;
+        color: white;
+    }
+    .chat-message-bot {
+        background: #1e2130;
+        padding: 15px;
+        border-radius: 15px;
+        margin: 10px 0;
+        border-left: 4px solid #667eea;
+        color: white;
+    }
+    .source-badge {
+        background: #667eea;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        color: white;
+    }
+    .stButton>button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 20px;
+        width: 100%;
+    }
+    .upload-section {
+        background: #1e2130;
+        padding: 20px;
+        border-radius: 15px;
+        border: 1px solid #667eea;
+    }
+    [data-testid="stSidebar"] {
+        background-color: #1e2130;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div class="main-header">
+    <h1>🤖 RAG Chatbot</h1>
+    <p>Upload a PDF and ask questions powered by AI</p>
+</div>
+""", unsafe_allow_html=True)
 
 llm = ChatGroq(
     api_key=os.getenv("GROQ_API_KEY"),
@@ -28,21 +93,24 @@ Question: {question}
 Answer:
 """)
 
-# PDF Upload
-st.sidebar.header("📄 Upload Document")
+st.sidebar.markdown("## 📄 Upload Document")
+st.sidebar.markdown("---")
 uploaded_file = st.sidebar.file_uploader("Choose a PDF file", type="pdf")
 
 if uploaded_file is not None:
-    if st.sidebar.button("Upload PDF"):
-        with st.spinner("Processing..."):
+    if st.sidebar.button("🚀 Upload & Process"):
+        with st.spinner("Processing PDF..."):
             file_bytes = uploaded_file.read()
             text = extract_text_from_pdf(file_bytes)
             chunks = split_text_into_chunks(text)
             count = add_chunks_to_vectorstore(chunks, uploaded_file.name)
-            st.sidebar.success(f"✅ Done! {count} chunks stored!")
+            st.sidebar.success(f"✅ {count} chunks stored!")
 
-# Chat
-st.header("💬 Chat")
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 💡 How to use")
+st.sidebar.markdown("1. Upload a PDF file")
+st.sidebar.markdown("2. Click Upload & Process")
+st.sidebar.markdown("3. Ask questions below")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -51,13 +119,13 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if prompt := st.chat_input("Ask a question about your document..."):
+if prompt := st.chat_input("💬 Ask a question about your document..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
+        with st.spinner("🤔 Thinking..."):
             chunks, sources = search_relevant_chunks(prompt)
             context = "\n\n".join(chunks)
             chain = prompt_template | llm
